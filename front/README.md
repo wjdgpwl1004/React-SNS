@@ -27,3 +27,33 @@
 - next의 router 가 pages 내부의 경로가 url 경로와 동일하다.
 - 코드 스플리팅이 기본적으로 적용되어있다.
 - next에서 Link는 기본적으로 react Router 와 같이 사용할 수 있다.
+
+#### ant design 적용
+- npm i antd
+- Head태그를 사용하고 싶을때는 next/head 컴포넌트를 사용하여 html형태로 작성해준다.
+
+`AppLayout.js`
+```jsx
+import React from 'react';
+import { Menu, Input } from 'antd';
+
+const AppLayout = ({ children }) => {
+    return (
+        <div>
+            <Menu mode="horizontal">
+                <Menu.Item key="home">노드버드</Menu.Item>
+                <Menu.Item key="profile">프로필</Menu.Item>
+                <Menu.Item key="mail">
+                    <Input.Search enterButton style={{ verticalAlign: 'middle' }} />
+                </Menu.Item>
+            </Menu>
+            {children}
+        </div>
+    );
+}
+
+export default AppLayout; 
+```
+
+
+
