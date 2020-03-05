@@ -13,7 +13,6 @@ const Home = () => {
             <AppLayout >
                 <div>
                     Hello, Next!!
-                    git change test
                 </div>
             </AppLayout>
         </>
