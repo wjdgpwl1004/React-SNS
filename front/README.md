@@ -186,4 +186,39 @@ const Signup =  () => {
 export default Signup; 
 ```
 
+#### 커스텀 훅 적용
+- [state, setState]의 형태로 반복적인 형태가 나타난다,
+    - 커스텀  훅을 사용하여 중복을 줄일 수 있다.
 
+#### useCallback 적용
+- 리랜더링이 일어날때마다 함수가 재실행되는 것을 막기위해 useCallback을 사용한다.
+
+#### _app.js
+- head 부분이 중복적으로 리랜더링된다. Next에서는 이러한 중복을 막기 위한 방법을 제공한다.
+- pages 폴더 내부에 _app.js를 만든다. 해당 파일에 컴포넌트를 구성하면 해당 컴포넌트는 다른 컴포넌트의 부모가 된다.
+- next에서 Component라는 props를 전달해주는데, 이Component는 index, profile, singup 과 같은 해당 페이지의 컴포넌트들이다.
+- 나머지 페이지 컴포넌트들의 중복부분을 제거
+
+`_app.js`
+```jsx
+import React from 'react';
+import Head from 'next/head';
+import AppLayout from '../components/AppLayout';
+
+const NodeBird = ({ Component }) => {
+    return (
+        <>
+            <Head>
+                <title>React-SNS</title>
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/antd/3.16.2/antd.css"/>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/antd/3.16.2/antd.js"></script>
+            </Head>
+            <AppLayout>
+                <Component/>
+            </AppLayout>
+        </>
+    );
+};
+
+export default NodeBird; 
+```

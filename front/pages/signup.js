@@ -1,66 +1,48 @@
-import React, {useState} from 'react';
-import AppLayout from '../components/AppLayout';
-import Head from 'next/head';
+import React, {useState, useCallback} from 'react';
 import { Form, Input, Checkbox, Button } from 'antd';
 
 const Signup =  () => {
-    const [id, setId] = useState('');
-    const [nick, setNick] = useState('');
-    const [password, setPassword] = useState('');
+    const useInput = (initValue = null) => {
+        const [value, setValue] = useState(initValue);
+        const handler = useCallback((e) => {
+            setValue(e.target.value);
+        }, []);
+        return [value, handler];
+    };
+
+    const [id, onChangeId] = useInput('');
+    const [nick, onChangeNick] = useInput('');
+    const [password, onChangePassword] = useInput('');
     const [passwordCheck, setPasswordCheck] = useState('');
     const [term, setTerm] = useState(false);
-    const [passwordError, setPasswordError] = useState(false);
-    const [termError,  setTermError] = useState(false);
+    const [passwordError, setPasswordError] = useInput(false);
+    const [termError, setTermError] = useInput(false);
 
 
-    const onSubmit = (e) => {
+    const onSubmit = useCallback((e) => {
         e.preventDefault();
-        if(password !== passwordCheck) {
+
+        if (password !== passwordCheck) {
             return setPasswordError(true);
         }
-        if(!term) {
+        if (!term) {
             return setTermError(true);
         }
+    }, [password, passwordCheck, term]);
 
-        console.log({
-            id,
-            nick,
-            password,
-            passwordCheck,
-            term
-        });
-    };
 
-    const onChangeId = (e) => {
-        setId(e.target.value);
-    };
-    
-    const onChangeNick = (e) => {
-        setNick(e.target.value);
-    };
-
-    const onChangePassword = (e) => {
-        setPassword(e.target.value);
-    };
-
-    const onChangePasswordCheck = (e) => {
+    const onChangePasswordCheck = useCallback((e) => {
         setPasswordError(e.target.value !== password);
         setPasswordCheck(e.target.value);
-    };
+    }, [password]);
 
-    const onChangeTerm = (e) => {
+    const onChangeTerm = useCallback(() => {
         setTermError(false);
-        setTerm(e.target.checked);
-    };
+        setTerm((prevTerm) => !prevTerm);
+    }, [term]);
 
     return (
         <>
-        <Head>
-        <title>React-SNS</title>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/antd/3.16.2/antd.css"/>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/antd/3.16.2/antd.js"></script>
-        </Head>
-        <AppLayout>
             <Form onSubmit={onSubmit} style={{ padding: 10 }}>
                 <div>
                     <label htmlFor="user-id">아이디</label>
@@ -91,7 +73,6 @@ const Signup =  () => {
                     <Button type="primary" htmlType="submit">가입하기</Button>
                 </div>
             </Form>
-        </AppLayout>
         </>
     );
 }
