@@ -222,3 +222,41 @@ const NodeBird = ({ Component }) => {
 
 export default NodeBird; 
 ```
+#### prop-types 적용
+- npm i prop-types
+- 자식컴포넌트가 부모로부터 받은 Props를 올바른 데이터 타입의 데이터를 받았는지 검증 가능
+```jsx
+import React from 'react';
+import Head from 'next/head';
+import PropTypes from 'prop-types';
+import AppLayout from '../components/AppLayout';
+
+const NodeBird = ({ Component }) => {
+    return (
+        <>
+            <Head>
+                <title>React-SNS</title>
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/antd/3.16.2/antd.css"/>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/antd/3.16.2/antd.js"></script>
+            </Head>
+            <AppLayout>
+                <Component/>
+            </AppLayout>
+        </>
+    );
+};
+
+NodeBird.PropTypes = {
+    Component: PropTypes.elementType,
+};
+
+export default NodeBird; 
+```
+
+
+#### Next에서 제공하는 공통부분 처리
+- 1. _document.js : html, head, body
+- 2. _app.js : root
+- 3. _error.js : 에러페이지
+- pages : 실제 컴포넌트
+
