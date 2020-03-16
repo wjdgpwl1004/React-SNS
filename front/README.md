@@ -260,3 +260,5 @@ export default NodeBird;
 - 3. _error.js : 에러페이지
 - pages : 실제 컴포넌트
 
+
+
