@@ -23,7 +23,7 @@ const AppLayout = ({ children }) => {
                 </Menu.Item>
             </Menu>
             
-            <Row>
+            <Row gutter={8}>
                 <Col xs={24} md={6}>
                     {dummy.isLoggedIn ?
                     <Card
@@ -45,7 +45,7 @@ const AppLayout = ({ children }) => {
                 <Col xs={24}  md={12}>
                     {children}
                 </Col>
-                <Col xs={24}  md={6}>3</Col>
+                <Col xs={24}  md={6}></Col>
             </Row>
             
         </div>
