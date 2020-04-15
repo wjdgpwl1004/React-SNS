@@ -267,3 +267,28 @@ export default NodeBird;
     - 반복문과 조건문을 사용할 경우 복잡도가 증가하기 때문에 컴포넌트로 분리하여 복잡도를 낮춰준다.
 
 
+#### Redux
+- state들을 관리하는 방법
+    - redux
+    - mobx
+    - graphQL Client
+ 
+```javascript
+{
+    isLoggedIn: false, // 로그인여부
+    user: {}, //로그인한 사용자 
+    mainPosts: [] // 게시글 .. 
+} -> store
+```
+- 하나의 State를 각 필요한 컴포넌트들에게 분배하는역할
+- Redux: 복잡한 상태 제어
+- React: 간단한 상태 제어
+
+- Redux
+    - Action: state를 바꾸는 행동 
+        - ex) 로그인액션
+    - Dispatch: Action을 실행 
+        - ex) 로그인액션 Dispatch
+    - Reducer: Action의 결과로 state를 어떻게 바꿀지 정의 
+        - ex) 로그인액션 dispatch시 isLoggedIn = true
+    - 리액트와 별개이며, Vue, Node 등에 사용가능함.
