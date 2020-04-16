@@ -292,3 +292,55 @@ export default NodeBird;
     - Reducer: Action의 결과로 state를 어떻게 바꿀지 정의 
         - ex) 로그인액션 dispatch시 isLoggedIn = true
     - 리액트와 별개이며, Vue, Node 등에 사용가능함.
+
+#### 첫 리듀서 만들기
+- npm i redux react-redux
+    - redux 와 react를 연결해주기 위해 react-redux를 설치해줌
+- Action이 기록이 남고, 역추적이 가능함 타임머신 기능
+- 에러 디버깅이 쉽다.
+- 코드량이 많아지지만, 예외 발생이 적다.
+- store를 따로 분리가능함.
+- Reducer
+    - reducers > index.js(root Store)
+    - 액션의 이름과 액션을 정의해주고, switch문에서 해당 reducer를 정의
+
+`user.js`
+```jsx
+const initialState = {
+    isLoggedIn: false,
+    user: {},
+};
+
+const LOG_IN = 'LOG_IN'; //액션의 이름
+const LOG_OUT = 'LOG_OUT';
+
+const loginAction = {
+    type: LOG_IN,
+    data: {
+        nickname: '정곰',
+    },
+};
+
+const logoutAction = {
+    type: LOG_OUT,
+}
+
+const reducer = (state = initialState, action) => {
+    switch (action.type) {
+        case LOG_IN: {
+            return {
+                ...state,
+                isLoggedIn: true,
+                user: action.data,
+            }
+        }
+        case LOG_OUT: {
+            return {
+                ...state,
+                isLoggedIn: false,
+                user: null,
+            }
+        }
+    }
+};
+```
