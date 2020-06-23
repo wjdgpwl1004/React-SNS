@@ -27,7 +27,6 @@ NodeBird.propTypes = {
     store: PropTypes.object,
 };
 
-// export default NodeBird;
 export default withRedux((initialState, options) => {
     const middlewares = [];
     const enhancer = compose(

@@ -344,3 +344,99 @@ const reducer = (state = initialState, action) => {
     }
 };
 ```
+#### HOC 방식으로 action, dispatch 가져오기
+
+`pages/index.js`
+```jsx
+import React, { useEffect } from 'react';
+import PostForm from '../components/PostForm';
+import PostCard from '../components/PostCard';
+import { connect } from 'react-redux';
+import { loginAction, logoutAction } from '../reducers/user';
+
+const dummy = {
+    isLoggedIn: true,
+    imagePaths: [],
+    mainPosts: [{
+        User: {
+            id: 1,
+            nickname: '정곰',
+        },
+        content: '첫번째 글',
+        img: 'https://t1.daumcdn.net/cfile/tistory/24283C3858F778CA2E',
+    }],
+};
+
+const Home = ({ user, dispatch, login, logout }) => {
+    useEffect(() => {
+        login();
+        logout();
+        login();
+    }, []);
+    return (
+        <>
+            <div>
+                {user ? <div>로그인했습니다 : {user.nickname}</div> : <div>로그아웃했습니다</div>}
+                {dummy.isLoggedIn && <PostForm /> }
+                {dummy.mainPosts.map((c) => {
+                    return(
+                        <PostCard key={c} post={c} />
+                    )
+                })}
+            </div>
+        </>
+    )
+};
+
+function mapStateToProps(state) {
+    return {
+        user: state.user,
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        login: () => dispatch(loginAction),
+        logout: () => dispatch(logoutAction),
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
+```
+
+#### react-redux 훅을 사용하여 action, dispatch 가져오기
+- react-redux 버전이 7.1 이상이어야 관련 훅을 지원한다.
+
+`pages/index.js`
+```jsx
+import React, { useEffect } from 'react';
+import PostForm from '../components/PostForm';
+import PostCard from '../components/PostCard';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginAction, logoutAction } from '../reducers/user';
+import { useState } from 'react';
+
+
+const Home = () => {
+    const dispatch = useDispatch();
+    // 상태값이 바뀔때마다 컴포넌트가 리랜더링 되므로, 성능 최적화를 위해 상태를 쪼개는 경우도 있다.
+    const { isLoggedIn } = useSelector(state => state.user);
+    const{ mainPosts } = useSelector(state => state.post);
+
+    return (
+        <>
+            <div>
+                {isLoggedIn && <PostForm /> }
+                {mainPosts.map((c) => {
+                    return(
+                        <PostCard key={c} post={c} />
+                    )
+                })}
+            </div>
+        </>
+    )
+};
+
+
+export default Home;
+```

@@ -1,26 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PostForm from '../components/PostForm';
 import PostCard from '../components/PostCard';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginAction, logoutAction } from '../reducers/user';
+import { useState } from 'react';
 
-const dummy = {
-    isLoggedIn: true,
-    imagePaths: [],
-    mainPosts: [{
-        User: {
-            id: 1,
-            nickname: '정곰',
-        },
-        content: '첫번째 글',
-        img: 'https://t1.daumcdn.net/cfile/tistory/24283C3858F778CA2E',
-    }],
-};
 
 const Home = () => {
+    const dispatch = useDispatch();
+    // 상태값이 바뀔때마다 컴포넌트가 리랜더링 되므로, 성능 최적화를 위해 상태를 쪼개는 경우도 있다.
+    const { isLoggedIn } = useSelector(state => state.user);
+    const{ mainPosts } = useSelector(state => state.post);
+
     return (
         <>
             <div>
-                {dummy.isLoggedIn && <PostForm /> }
-                {dummy.mainPosts.map((c) => {
+                {isLoggedIn && <PostForm /> }
+                {mainPosts.map((c) => {
                     return(
                         <PostCard key={c} post={c} />
                     )
@@ -29,5 +25,6 @@ const Home = () => {
         </>
     )
 };
+
 
 export default Home;

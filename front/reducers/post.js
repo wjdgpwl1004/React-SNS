@@ -1,15 +1,23 @@
 export const initialState = {
-    mainPosts: [],
+    mainPosts: [{
+        User: {
+            id: 1,
+            nickname: '정곰',
+        },
+        content: '첫번째 글',
+        img: 'https://t1.daumcdn.net/cfile/tistory/24283C3858F778CA2E',
+    }],
+    imagePaths: [],
 };
 
-const ADD_POST = 'ADD_POST';
-const ADD_DUMMY = 'ADD_DUMMY';
+export const ADD_POST = 'ADD_POST';
+export const ADD_DUMMY = 'ADD_DUMMY';
 
-const addPost = {
+export const addPost = {
     type: ADD_POST,
 };
 
-const addDummy = {
+export const addDummy = {
     type: ADD_DUMMY,
     data: {
         content: 'Hello',
