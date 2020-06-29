@@ -1,5 +1,18 @@
 import React, {useState, useCallback} from 'react';
 import { Form, Input, Checkbox, Button } from 'antd';
+import { useDispatch } from 'react-redux';
+import { signUpAction } from '../reducers/user';
+import PropTypes from 'prop-types';
+
+const TextInput = ({value}) => {
+    return (
+        <div>{value}</div>
+    )
+};
+
+TextInput.propTypes = {
+    value: PropTypes.string,
+};
 
 export const useInput = (initValue = null) => {
     const [value, setValue] = useState(initValue);
@@ -16,9 +29,9 @@ const Signup =  () => {
     const [password, onChangePassword] = useInput('');
     const [passwordCheck, setPasswordCheck] = useState('');
     const [term, setTerm] = useState(false);
-    const [passwordError, setPasswordError] = useInput(false);
-    const [termError, setTermError] = useInput(false);
-
+    const [passwordError, setPasswordError] = useState(false);
+    const [termError, setTermError] = useState(false);
+    const dispatch = useDispatch();
 
     const onSubmit = useCallback((e) => {
         e.preventDefault();
@@ -29,13 +42,18 @@ const Signup =  () => {
         if (!term) {
             return setTermError(true);
         }
+        dispatch(signUpAction({
+            id,
+            password,
+            nick,
+        }));
     }, [password, passwordCheck, term]);
 
 
     const onChangePasswordCheck = useCallback((e) => {
         setPasswordError(e.target.value !== password);
         setPasswordCheck(e.target.value);
-    }, [password]);
+    }, [passwordCheck]);
 
     const onChangeTerm = useCallback(() => {
         setTermError(false);
@@ -63,7 +81,7 @@ const Signup =  () => {
                 <div>
                     <label htmlFor="user-password-chk">비밀번호체크</label>
                     <br/>
-                    <Input name="user-password-chk" required value={passwordCheck} type="password" onChange={onChangePasswordCheck} />
+                    <Input name="user-password-chk" value={passwordCheck} required type="password" onChange={onChangePasswordCheck} />
                     {passwordError && <div style={{color:'red'}}>비밀번호가 일치하지 않습니다.</div>}
                 </div>
                 <div>

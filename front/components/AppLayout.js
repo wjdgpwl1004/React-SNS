@@ -3,7 +3,7 @@ import Link from 'next/link';
 import PropTypes from 'prop-types';
 import { Menu, Input, Row, Col } from 'antd';
 import LoginForm from './LoginForm';
-import UserProfile from './UsrProfile';
+import UserProfile from './UserProfile';
 import { useSelector } from 'react-redux';
 
 
